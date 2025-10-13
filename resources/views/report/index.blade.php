@@ -13,14 +13,28 @@
     <main>
         <a href="{{ route('reports.create') }}">создать заявление</a>
         <div class="container-flex">
-            <div class="elem-flex">
-                @foreach ($reports as $report)
-                <p class="elem-flex__p elem-flex-date">01.10.2024</p>
-                <p class="elem-flex__p elem-flex-number">A123BC 174</p>
-                <p class="elem-flex__p elem-flex-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae itaque voluptate quaerat, cumque neque qui numquam exercitationem quod laborum nihil ipsa, minima explicabo illum facilis voluptatem doloremque nesciunt iure. Praesentium.</p>
-                <p>Статус заявления - <span>подтверждено</span></p>
-                @endforeach
-            </div>
+            @foreach ($reports as $report)
+                <div class="elem-flex">
+                    <p class="elem-flex__p elem-flex-date">{{ $report-> created_at }}</p>  
+                    <p class="elem-flex__p elem-flex-number">{{ $report-> number }}</p>
+                    <p class="elem-flex__p elem-flex-text">{{ $report-> description }}</p>
+                    <?php
+                        if($report -> status_id === 1) {
+                            $statusIdText = "новое";
+                        } elseif ($report -> status_id === 2) {
+                            $statusIdText = "отклонено";
+                        } elseif ($report -> status_id === 3) {
+                            $statusIdText = "подтверждено";
+                        }
+                    ?>
+                    <p>Статус заявления - <span>{{ $statusIdText }}</span></p>
+                    <form action="{{ route('reports.destroy', $report->id) }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <input type="submit" class="form-btn__input" value="Удалить">
+                    </form>
+                </div>
+            @endforeach
         </div>
     </main>
 </body>
