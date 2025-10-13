@@ -8,10 +8,10 @@
 </head>
 <body>
     <main>
-        <form action="post" class="form-send">
+        <form action="{{ route('reports.store') }}" method="post" class="form-send">
             @csrf
-            <input type="text" placeholder="Номер машины" class="form-input-send"><br>
-            <textarea name="" class="form-input-send"></textarea><br>
+            <input type="text" name="number" placeholder="Номер машины" class="form-input-send"><br>
+            <textarea name="description" class="form-input-send"></textarea><br>
             <input type="submit" value="Создать заявку" class="form-input-send">
         </form>
     </main>

@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -33,6 +30,7 @@
                         @csrf
                         <input type="submit" class="form-btn__input" value="Удалить">
                     </form>
+                    <a href="{{ route('reports.edit', $report->id) }}">Update</a>
                 </div>
             @endforeach
         </div>
