@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Report;
 
 class ReportController extends Controller
@@ -22,6 +23,9 @@ class ReportController extends Controller
             'number' => 'string',
             'description' => 'string',
         ]);
+
+        $data['user_id'] = Auth::user()->id;
+        $data['status_id'] = 1;
 
         $report->create($data);
         return redirect()->back();
