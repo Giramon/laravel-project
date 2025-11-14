@@ -9,7 +9,8 @@ use App\Models\Report;
 class ReportController extends Controller
 {
     public function index() {
-        $reports = Report::all();
+        $sort = $request->input('sort');
+        $reports = Report::paginate(6);
         return view('report.index', compact('reports'));
     }
 
