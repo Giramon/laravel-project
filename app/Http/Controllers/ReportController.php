@@ -22,9 +22,9 @@ class ReportController extends Controller
         ]);
 
         if($validate) {
-            $reports = Report::where('status_id',$status)->orderBy('created_at', $sort)->paginate(6);
+            $reports = Report::where('status_id',$status)->where('user_id', Auth::user()->id)->orderBy('created_at', $sort)->paginate(6);
         } else {
-            $reports = Report::orderBy('created_at', $sort)->paginate(6);
+            $reports = Report::orderBy('created_at', $sort)->where('user_id', Auth::user()->id)->paginate(6);
         }
 
         $statuses = Status::all();
@@ -33,8 +33,12 @@ class ReportController extends Controller
     }
 
     public function destroy(Report $report) {
-        $report -> delete();
-        return redirect()->back();
+        if(Auth::user()->id === $report->user_id) {
+            $report -> delete();
+            return redirect()->back();
+        } else {
+            abort(403, 'Увас нет прав на редактирование этой записи');
+        }
     }
 
     public function store(Request $request, Report $report) {
@@ -51,16 +55,24 @@ class ReportController extends Controller
     }
 
     public function edit(Report $report) {
-        return view('report.show', compact('report'));
+        if(Auth::user()->id === $report->user_id) {
+            return view('report.show', compact('report'));
+        } else {
+            abort(403, 'Увас нет прав на редактирование этой записи');
+        }
     }
 
     public function update(Request $request, Report $report) {
-        $data = $request->validate([
-            'number' => 'string',
-            'description' => 'string',
-        ]);
+        if(Auth::user()->id === $report->user_id) {
+            $data = $request->validate([
+                'number' => 'string',
+                'description' => 'string',
+            ]);
 
-        $report->update($data);
-        return redirect()->back();
+            $report->update($data);
+            return redirect()->back();
+        } else {
+            abort(403, 'Увас нет прав на редактирование этой записи');
+        }
     }
 }
