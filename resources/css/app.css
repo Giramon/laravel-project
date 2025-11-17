@@ -2,3 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+.container-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.elem-flex {
+    width: 350px;
+    border: 1px solid;
+}
