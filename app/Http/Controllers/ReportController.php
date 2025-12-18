@@ -52,7 +52,7 @@ class ReportController extends Controller
             $data['status_id'] = 1;
 
             $report->create($data);
-            return redirect()->back();
+            return redirect()->route('report.index')->with('info', "Заявление отправлено");
         } else {
             abort(403, 'Увас нет прав на редактирование этой записи');
         }
@@ -74,7 +74,7 @@ class ReportController extends Controller
             ]);
 
             $report->update($data);
-            return redirect()->back();
+            return redirect()->route('report.index');
         } else {
             abort(403, 'Увас нет прав на редактирование этой записи');
         }
