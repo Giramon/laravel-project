@@ -79,4 +79,14 @@ class ReportController extends Controller
             abort(403, 'Увас нет прав на редактирование этой записи');
         }
     }
+
+    public function statusUpdate(Request $request, Report $report)
+    {
+        $request -> validate([
+            'status_id' => 'required|exists:statuses,id',
+
+        ]);
+        $report->update($request->only(['status_id']));
+        return redirect()->back();
+    }
 }

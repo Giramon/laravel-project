@@ -15,4 +15,8 @@ class Report extends Model
     public function status() : BelongsTo {
         return $this->belongsTo(Status::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
